@@ -1,24 +1,21 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 import '../App.css';
-import { initialState, todoReducer } from '../reducers/todoReducer';
 
-const TodoList = () => {
-
-    const [state, dispatch] = useReducer(todoReducer, initialState)
+const TodoList = (props) => {
 
 
-    // const classNameChange = (event) => {
-        console.log(state.todoArray)
-    //     dispatch({type:'TOGGLE_CLASSNAME', payload:event.target.classList.value});
-    //     console.log(event.target.classList.value)
-    //  }
+    const classNameChange = (event) => {
+        let val = event.target.classList.value
+        props.dispatch({type:'TOGGLE_CLASSNAME', payload: val});
+    }
     
+    console.log(props.state.todoArray)
+ 
     return (
-        state.todoArray.map(
-            element => <div key={element.id} onClick={() => {""}} className={element.id}>
-                            {element.item}
-                        </div>
-                        
+        props.state.todoArray.map(
+            element => {return (<div key={element.id} onClick={classNameChange} className={element.id}>
+                {element.item}
+            </div>)}
           )
     );
 }

@@ -25,25 +25,27 @@ export const initialState = {
 export const todoReducer = (state, action) => {
     switch(action.type) {
         case "SUBMIT_TEXT":
-            return {
-                ...state, todoArray: state.todoArray.push({item: action.payload.stateText, completed: false, id: Math.floor(action.payload.timeStamp)*1000000})
-            }
+            console.log({
+                ...state, todoArray: [...state.todoArray, {item: action.payload.stateText, completed: false, id: Date.now}]
+            })
         case "DELETE_TASK":
             return {
                 ...state, todoArray: state.todoArray.filter(element => element.completed === false)
             }
         case "TOGGLE_CLASSNAME":
-            let clickNewState = state.todoArray.map(item => {
-                if (item.id === action.payload) {
-                    return {
-                    ...item,
-                    completed: !item.completed
-                    };
+            //console.log(state.todoArray[0].id)
+            let clickNewState = state.todoArray.map(element => {
+                if (`${element.id}` === action.payload) {
+                    console.log('match');
+                    console.log(element);
+                    console.log({...element, completed: !element.completed});
+                    return {...element,completed: !element.completed}
+
                 } else {
-                    return item;
+                    console.log('doesnt match')
+                    return element;
                 }
             });
-
             return clickNewState;
         default:
             return state;

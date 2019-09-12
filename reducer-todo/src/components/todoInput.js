@@ -1,29 +1,26 @@
-import React, {useState, useReducer} from 'react';
+import React, {useState} from 'react';
 import '../App.css';
-import { todoReducer, initialState } from '../reducers/todoReducer';
 
-export default function TodoInput () {
+
+export default function TodoInput (props) {
 
     const [stateText, setStateText] = useState("");
     
-    const [state, dispatch]=useReducer(todoReducer, initialState);
-
-
     const handleChange = (event) => {
         setStateText(event.target.value);
-      }
+    }
 
 
     const submitChange = (event) => {
         event.preventDefault();
-        dispatch({type:"SUBMIT_TEXT", payload:{stateText:stateText, timeStamp:(event.timeStamp)}});
+        props.dispatch({type:"SUBMIT_TEXT", payload:{stateText:stateText, timeStamp:(event.timeStamp)}});
         setStateText('')
-        console.log(state.todoArray)
+        console.log(props.state)
     }
 
 
     const clearChange = () => {
-        dispatch({type:"DELETE_TASK"});
+        props.dispatch({type:"DELETE_TASK"});
     }
 
 
